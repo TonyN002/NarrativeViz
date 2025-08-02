@@ -15,78 +15,113 @@ d3.csv("https://flunky.github.io/cars2017.csv").then(data => {
 
   const scenes = [scene1, scene2, scene3];
 
-  // Initial scene
-  scenes[currentScene](cleanData);
-
-  // Next button
-  document.getElementById("next").addEventListener("click", () => {
+  d3.select("#next").on("click", () => {
     currentScene = (currentScene + 1) % scenes.length;
     svg.selectAll("*").remove();
     scenes[currentScene](cleanData);
   });
 
-  // Back button (✅ now using addEventListener)
-  document.getElementById("back").addEventListener("click", () => {
-    currentScene = (currentScene - 1 + scenes.length) % scenes.length;
-    svg.selectAll("*").remove();
-    scenes[currentScene](cleanData);
-  });
+  scenes[currentScene](cleanData);
 });
 
 function scene1(data) {
-  const x = d3.scaleLinear().domain(d3.extent(data, d => d.city)).range([50, 850]);
-  const y = d3.scaleLinear().domain(d3.extent(data, d => d.highway)).range([550, 50]);
+  const x = d3.scaleLinear()
+    .domain(d3.extent(data, d => d.city))
+    .range([50, 850]);
 
-  svg.append("g").attr("transform", "translate(0,550)").call(d3.axisBottom(x));
-  svg.append("g").attr("transform", "translate(50,0)").call(d3.axisLeft(y));
+  const y = d3.scaleLinear()
+    .domain(d3.extent(data, d => d.highway))
+    .range([550, 50]);
 
-  svg.selectAll("circle").data(data).enter().append("circle")
+  svg.append("g")
+    .attr("transform", "translate(0,550)")
+    .call(d3.axisBottom(x));
+
+  svg.append("g")
+    .attr("transform", "translate(50,0)")
+    .call(d3.axisLeft(y));
+
+  svg.selectAll("circle")
+    .data(data)
+    .enter()
+    .append("circle")
     .attr("cx", d => x(d.city))
     .attr("cy", d => y(d.highway))
     .attr("r", 5)
     .attr("fill", "steelblue");
 
-  const annotations = d3.annotation().annotations([
-    {
-      note: { label: "City vs. Highway MPG", title: "Scene 1" },
-      x: 150, y: 100, dx: 30, dy: 30
-    }
-  ]);
+  const annotations = d3.annotation()
+    .annotations([
+      {
+        note: { label: "City vs. Highway MPG", title: "Scene 1" },
+        x: 150, y: 100, dx: 30, dy: 30
+      }
+    ]);
   svg.append("g").call(annotations);
 }
 
 function scene2(data) {
-  const x = d3.scaleLinear().domain(d3.extent(data, d => d.city)).range([50, 850]);
-  const y = d3.scaleLinear().domain(d3.extent(data, d => d.highway)).range([550, 50]);
+  const x = d3.scaleLinear()
+    .domain(d3.extent(data, d => d.city))
+    .range([50, 850]);
 
-  svg.append("g").attr("transform", "translate(0,550)").call(d3.axisBottom(x));
-  svg.append("g").attr("transform", "translate(50,0)").call(d3.axisLeft(y));
+  const y = d3.scaleLinear()
+    .domain(d3.extent(data, d => d.highway))
+    .range([550, 50]);
 
-  svg.selectAll("circle").data(data).enter().append("circle")
+  svg.append("g")
+    .attr("transform", "translate(0,550)")
+    .call(d3.axisBottom(x));
+
+  svg.append("g")
+    .attr("transform", "translate(50,0)")
+    .call(d3.axisLeft(y));
+
+  svg.selectAll("circle")
+    .data(data)
+    .enter()
+    .append("circle")
     .attr("cx", d => x(d.city))
     .attr("cy", d => y(d.highway))
     .attr("r", 5)
     .attr("fill", d => d.cylinders === 4 ? "green" : "#ccc");
 
-  const annotations = d3.annotation().annotations([
-    {
-      note: { label: "Green dots = 4-cylinder cars", title: "Scene 2" },
-      x: 200, y: 120, dx: 40, dy: 20
-    }
-  ]);
+  const annotations = d3.annotation()
+    .annotations([
+      {
+        note: { label: "Green dots = 4-cylinder cars", title: "Scene 2" },
+        x: 200, y: 120, dx: 40, dy: 20
+      }
+    ]);
   svg.append("g").call(annotations);
 }
 
 function scene3(data) {
-  const x = d3.scaleLinear().domain(d3.extent(data, d => d.city)).range([50, 850]);
-  const y = d3.scaleLinear().domain(d3.extent(data, d => d.highway)).range([550, 50]);
+  const x = d3.scaleLinear()
+    .domain(d3.extent(data, d => d.city))
+    .range([50, 850]);
 
-  svg.append("g").attr("transform", "translate(0,550)").call(d3.axisBottom(x));
-  svg.append("g").attr("transform", "translate(50,0)").call(d3.axisLeft(y));
+  const y = d3.scaleLinear()
+    .domain(d3.extent(data, d => d.highway))
+    .range([550, 50]);
 
-  const tooltip = d3.select("body").append("div").attr("class", "tooltip").style("opacity", 0);
+  svg.append("g")
+    .attr("transform", "translate(0,550)")
+    .call(d3.axisBottom(x));
 
-  svg.selectAll("circle").data(data).enter().append("circle")
+  svg.append("g")
+    .attr("transform", "translate(50,0)")
+    .call(d3.axisLeft(y));
+
+  const tooltip = d3.select("body")
+    .append("div")
+    .attr("class", "tooltip")
+    .style("opacity", 0);
+
+  svg.selectAll("circle")
+    .data(data)
+    .enter()
+    .append("circle")
     .attr("cx", d => x(d.city))
     .attr("cy", d => y(d.highway))
     .attr("r", 5)
@@ -101,11 +136,12 @@ function scene3(data) {
       tooltip.transition().duration(300).style("opacity", 0);
     });
 
-  const annotations = d3.annotation().annotations([
-    {
-      note: { label: "Orange dots = highest efficiency", title: "Scene 3" },
-      x: 250, y: 150, dx: 50, dy: -30
-    }
-  ]);
+  const annotations = d3.annotation()
+    .annotations([
+      {
+        note: { label: "Orange dots = highest efficiency", title: "Scene 3" },
+        x: 250, y: 150, dx: 50, dy: -30
+      }
+    ]);
   svg.append("g").call(annotations);
 }
