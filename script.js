@@ -48,7 +48,8 @@ function renderScene(sceneNum) {
   const titles = [
     { title: "Fuel Efficiency Overview", subtitle: "City MPG vs. Highway MPG" },
     { title: "High-Efficiency Cars", subtitle: "Highlighting Hybrids & Electric Vehicles" },
-    { title: "Low-Efficiency Cars", subtitle: "Gas Guzzlers: 8+ Cylinder Engines" }
+    { title: "Low-Efficiency Cars", subtitle: "Gas Guzzlers: 8+ Cylinder Engines" },
+    { title: "Conclusion/Exploration", subtitle: "Gas Guzzlers: 8+ Cylinder Engines" }
   ];
   if (sceneNum < 3) {
     svg.selectAll(".scene-title").remove();
@@ -120,7 +121,7 @@ function renderScene(sceneNum) {
 }
 
 function getColor(sceneNum, d) {
-  if (sceneNum === 1 && (d.Fuel === "Electricity" || d.Fuel.includes("Hybrid"))) return "#2ca02c"; // green
+  if (sceneNum === 1 && (d.Fuel === "Electricity" || d.Fuel.includes("Hybrid"))) return "#32CD32"; // green
   if (sceneNum === 2 && d.cylinders >= 8) return "#d62728"; // red
   return "#999"; // gray
 }
