@@ -15,19 +15,22 @@ d3.csv("https://flunky.github.io/cars2017.csv").then(data => {
 
   const scenes = [scene1, scene2, scene3];
 
+  // Render initial scene
+  scenes[currentScene](cleanData);
+
+  // Next scene button
   d3.select("#next").on("click", () => {
     currentScene = (currentScene + 1) % scenes.length;
     svg.selectAll("*").remove();
     scenes[currentScene](cleanData);
   });
 
+  // Back scene button
   d3.select("#back").on("click", () => {
     currentScene = (currentScene - 1 + scenes.length) % scenes.length;
     svg.selectAll("*").remove();
     scenes[currentScene](cleanData);
   });
-
-  scenes[currentScene](cleanData);
 });
 
 function scene1(data) {
