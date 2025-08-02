@@ -38,7 +38,7 @@ svg {
   margin-top: 20px;
 }
 
-button {
+#next {
   background-color: #2a7ae2;
   color: white;
   border: none;
@@ -47,35 +47,20 @@ button {
   border-radius: 5px;
   cursor: pointer;
   transition: background 0.3s ease;
-  margin: 0 10px;
 }
 
-button:hover {
+#next:hover {
   background-color: #1d5fbb;
 }
 
 .scene-title {
   font-family: 'Helvetica Neue', sans-serif;
   fill: #333;
-  font-size: 22px;
-  font-weight: bold;
 }
 
 .tooltip {
-  position: absolute;
-  text-align: left;
-  padding: 8px;
-  background: rgba(0, 0, 0, 0.75);
-  color: #fff;
-  border-radius: 4px;
-  pointer-events: none;
   font-size: 13px;
-}
-
-#instructions {
-  margin-top: 15px;
-  font-size: 16px;
-  color: #444;
+  pointer-events: none;
 }
 
 @media (max-width: 768px) {
