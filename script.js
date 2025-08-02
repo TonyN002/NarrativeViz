@@ -1,159 +1,147 @@
-let scene = 0;
-let data;
 const svg = d3.select("svg");
-const width = +svg.attr("width");
-const height = +svg.attr("height");
-const margin = { top: 80, right: 40, bottom: 60, left: 70 };
+let currentScene = 0;
 
-const innerWidth = width - margin.left - margin.right;
-const innerHeight = height - margin.top - margin.bottom;
+d3.csv("https://flunky.github.io/cars2017.csv").then(data => {
+  const cleanData = data.filter(d => 
+    +d.AverageCityMPG > 0 &&
+    +d.AverageHighwayMPG > 0 &&
+    +d.EngineCylinders > 0
+  ).map(d => ({
+    make: d.Make,
+    city: +d.AverageCityMPG,
+    highway: +d.AverageHighwayMPG,
+    cylinders: +d.EngineCylinders
+  }));
 
-const g = svg.append("g").attr("transform", `translate(${margin.left},${margin.top})`);
-
-const x = d3.scaleLinear().range([0, innerWidth]);
-const y = d3.scaleLinear().range([innerHeight, 0]);
-
-const tooltip = d3.select("body").append("div")
-  .style("position", "absolute")
-  .style("padding", "8px")
-  .style("background", "#333")
-  .style("color", "#fff")
-  .style("border-radius", "4px")
-  .style("pointer-events", "none")
-  .style("display", "none");
-
-d3.csv("https://flunky.github.io/cars2017.csv").then(raw => {
-  data = raw.filter(d => +d.AverageCityMPG > 0 && +d.AverageHighwayMPG > 0);
-  data.forEach(d => {
-    d.city = +d.AverageCityMPG;
-    d.highway = +d.AverageHighwayMPG;
-    d.cylinders = +d["EngineCylinders"];
-  });
-
-  x.domain([0, d3.max(data, d => d.city) + 5]);
-  y.domain([0, d3.max(data, d => d.highway) + 5]);
+  const scenes = [scene1, scene2, scene3];
 
   d3.select("#next").on("click", () => {
-    scene++;
-    renderScene(scene);
+    currentScene = (currentScene + 1) % scenes.length;
+    svg.selectAll("*").remove();
+    scenes[currentScene](cleanData);
   });
 
-  renderScene(scene);
+  scenes[currentScene](cleanData);
 });
 
-function renderScene(sceneNum) {
-  g.selectAll("*").remove(); // Clear previous scene
+function scene1(data) {
+  const x = d3.scaleLinear()
+    .domain(d3.extent(data, d => d.city))
+    .range([50, 850]);
 
-  // Title and subtitle for each scene
-  const titles = [
-    { title: "Fuel Efficiency Overview", subtitle: "City MPG vs. Highway MPG" },
-    { title: "High-Efficiency Cars", subtitle: "Highlighting Hybrids & Electric Vehicles" },
-    { title: "Low-Efficiency Cars", subtitle: "Gas Guzzlers: 8+ Cylinder Engines" }
-  ];
-  if (sceneNum < 3) {
-    svg.selectAll(".scene-title").remove();
-    svg.append("text")
-      .attr("class", "scene-title")
-      .attr("x", width / 2)
-      .attr("y", 30)
-      .attr("text-anchor", "middle")
-      .style("font-size", "24px")
-      .text(titles[sceneNum].title);
+  const y = d3.scaleLinear()
+    .domain(d3.extent(data, d => d.highway))
+    .range([550, 50]);
 
-    svg.append("text")
-      .attr("class", "scene-title")
-      .attr("x", width / 2)
-      .attr("y", 55)
-      .attr("text-anchor", "middle")
-      .style("font-size", "16px")
-      .style("fill", "#666")
-      .text(titles[sceneNum].subtitle);
-  }
-
-  // Axes
-  g.append("g")
-    .attr("transform", `translate(0,${innerHeight})`)
+  svg.append("g")
+    .attr("transform", "translate(0,550)")
     .call(d3.axisBottom(x));
 
-  g.append("g")
+  svg.append("g")
+    .attr("transform", "translate(50,0)")
     .call(d3.axisLeft(y));
 
-  g.append("text")
-    .attr("x", innerWidth / 2)
-    .attr("y", innerHeight + 45)
-    .attr("text-anchor", "middle")
-    .style("font-size", "12px")
-    .text("Average City MPG");
-
-  g.append("text")
-    .attr("transform", "rotate(-90)")
-    .attr("x", -innerHeight / 2)
-    .attr("y", -50)
-    .attr("text-anchor", "middle")
-    .style("font-size", "12px")
-    .text("Average Highway MPG");
-
-  const dots = g.selectAll("circle")
+  svg.selectAll("circle")
     .data(data)
     .enter()
     .append("circle")
     .attr("cx", d => x(d.city))
     .attr("cy", d => y(d.highway))
     .attr("r", 5)
-    .attr("fill", d => getColor(sceneNum, d))
-    .attr("opacity", 0.8)
-    .attr("stroke", "#333");
+    .attr("fill", "steelblue");
 
-  dots.on("mouseover", function (event, d) {
-    tooltip
-      .style("display", "block")
-      .html(`<strong>${d.Make} ${d.Model}</strong><br/>City: ${d.city} MPG<br/>Highway: ${d.highway} MPG`);
-  }).on("mousemove", function (event) {
-    tooltip
-      .style("left", (event.pageX + 10) + "px")
-      .style("top", (event.pageY - 28) + "px");
-  }).on("mouseout", function () {
-    tooltip.style("display", "none");
-  });
-
-  renderAnnotation(sceneNum);
+  const annotations = d3.annotation()
+    .annotations([
+      {
+        note: { label: "City vs. Highway MPG", title: "Scene 1" },
+        x: 150, y: 100, dx: 30, dy: 30
+      }
+    ]);
+  svg.append("g").call(annotations);
 }
 
-function getColor(sceneNum, d) {
-  if (sceneNum === 1 && (d.Fuel === "Electricity" || d.Fuel.includes("Hybrid"))) return "#2ca02c"; // green
-  if (sceneNum === 2 && d.cylinders >= 8) return "#d62728"; // red
-  return "#999"; // gray
+function scene2(data) {
+  const x = d3.scaleLinear()
+    .domain(d3.extent(data, d => d.city))
+    .range([50, 850]);
+
+  const y = d3.scaleLinear()
+    .domain(d3.extent(data, d => d.highway))
+    .range([550, 50]);
+
+  svg.append("g")
+    .attr("transform", "translate(0,550)")
+    .call(d3.axisBottom(x));
+
+  svg.append("g")
+    .attr("transform", "translate(50,0)")
+    .call(d3.axisLeft(y));
+
+  svg.selectAll("circle")
+    .data(data)
+    .enter()
+    .append("circle")
+    .attr("cx", d => x(d.city))
+    .attr("cy", d => y(d.highway))
+    .attr("r", 5)
+    .attr("fill", d => d.cylinders === 4 ? "green" : "#ccc");
+
+  const annotations = d3.annotation()
+    .annotations([
+      {
+        note: { label: "Green dots = 4-cylinder cars", title: "Scene 2" },
+        x: 200, y: 120, dx: 40, dy: 20
+      }
+    ]);
+  svg.append("g").call(annotations);
 }
 
-function renderAnnotation(sceneNum) {
-  const annotations = [];
+function scene3(data) {
+  const x = d3.scaleLinear()
+    .domain(d3.extent(data, d => d.city))
+    .range([50, 850]);
 
-  if (sceneNum === 0) {
-    annotations.push({
-      note: { title: "Most Cars", label: "Follow a trend where highway MPG > city MPG" },
-      x: x(20),
-      y: y(30),
-      dx: 60,
-      dy: -40
-    });
-  } else if (sceneNum === 1) {
-    annotations.push({
-      note: { title: "High MPG Vehicles", label: "Electric and Hybrid cars shine in city driving" },
-      x: x(60),
-      y: y(80),
-      dx: 100,
-      dy: -30
-    });
-  } else if (sceneNum === 2) {
-    annotations.push({
-      note: { title: "Low MPG Cars", label: "8+ Cylinder cars are less efficient" },
-      x: x(12),
-      y: y(15),
-      dx: 80,
-      dy: 40
-    });
-  }
+  const y = d3.scaleLinear()
+    .domain(d3.extent(data, d => d.highway))
+    .range([550, 50]);
 
-  const makeAnnotations = d3.annotation().annotations(annotations);
-  g.append("g").call(makeAnnotations);
+  svg.append("g")
+    .attr("transform", "translate(0,550)")
+    .call(d3.axisBottom(x));
+
+  svg.append("g")
+    .attr("transform", "translate(50,0)")
+    .call(d3.axisLeft(y));
+
+  const tooltip = d3.select("body")
+    .append("div")
+    .attr("class", "tooltip")
+    .style("opacity", 0);
+
+  svg.selectAll("circle")
+    .data(data)
+    .enter()
+    .append("circle")
+    .attr("cx", d => x(d.city))
+    .attr("cy", d => y(d.highway))
+    .attr("r", 5)
+    .attr("fill", d => (d.city + d.highway > 70) ? "orange" : "#999")
+    .on("mouseover", function(event, d) {
+      tooltip.transition().duration(200).style("opacity", 0.9);
+      tooltip.html(`Make: ${d.make}<br>City MPG: ${d.city}<br>Highway MPG: ${d.highway}`)
+        .style("left", (event.pageX + 10) + "px")
+        .style("top", (event.pageY - 28) + "px");
+    })
+    .on("mouseout", () => {
+      tooltip.transition().duration(300).style("opacity", 0);
+    });
+
+  const annotations = d3.annotation()
+    .annotations([
+      {
+        note: { label: "Orange dots = highest efficiency", title: "Scene 3" },
+        x: 250, y: 150, dx: 50, dy: -30
+      }
+    ]);
+  svg.append("g").call(annotations);
 }
