@@ -21,6 +21,12 @@ d3.csv("https://flunky.github.io/cars2017.csv").then(data => {
     scenes[currentScene](cleanData);
   });
 
+  d3.select("#back").on("click", () => {
+    currentScene = (currentScene - 1 + scenes.length) % scenes.length;
+    svg.selectAll("*").remove();
+    scenes[currentScene](cleanData);
+  });
+
   scenes[currentScene](cleanData);
 });
 
