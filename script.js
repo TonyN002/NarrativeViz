@@ -107,7 +107,7 @@ function renderScene(sceneNum) {
   dots.on("mouseover", function (event, d) {
     tooltip
       .style("display", "block")
-      .html(`<strong>${d.Make} ${d.Model}</strong><br/>City: ${d.city} MPG<br/>Highway: ${d.highway} MPG`);
+      .html(`<strong>${d.Make}</strong><br/>City: ${d.city} MPG<br/>Highway: ${d.highway} MPG`);
   }).on("mousemove", function (event) {
     tooltip
       .style("left", (event.pageX + 10) + "px")
