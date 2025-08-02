@@ -1,3 +1,4 @@
+/* Base Reset */
 * {
   margin: 0;
   padding: 0;
@@ -5,7 +6,7 @@
 }
 
 body {
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, sans-serif;
   background-color: #f9f9f9;
   color: #333;
   line-height: 1.6;
@@ -21,57 +22,50 @@ h1 {
 
 #chart-area {
   margin: 30px auto;
-  max-width: 960px;
-  width: 100%;
+  max-width: 900px;
 }
 
 svg {
   background-color: #fff;
   border: 1px solid #ddd;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
-  border-radius: 6px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
   display: block;
   margin: auto;
-  max-width: 100%;
-  height: auto;
+  border-radius: 6px;
 }
 
 #controls {
   margin-top: 20px;
 }
 
-#controls button {
+#next {
   background-color: #2a7ae2;
   color: white;
   border: none;
-  padding: 10px 20px;
-  margin: 0 10px;
+  padding: 10px 24px;
   font-size: 16px;
   border-radius: 5px;
   cursor: pointer;
   transition: background 0.3s ease;
 }
 
-#controls button:hover {
+#next:hover {
   background-color: #1d5fbb;
 }
 
-#controls button:disabled {
-  background-color: #ccc;
-  cursor: not-allowed;
-}
-
-#filter-container {
-  font-size: 16px;
-}
-
-#make-select {
-  padding: 6px 12px;
-  margin-left: 10px;
-  font-size: 15px;
+.scene-title {
+  font-family: 'Helvetica Neue', sans-serif;
+  fill: #333;
 }
 
 .tooltip {
   font-size: 13px;
   pointer-events: none;
+}
+
+@media (max-width: 768px) {
+  svg {
+    width: 100% !important;
+    height: auto !important;
+  }
 }

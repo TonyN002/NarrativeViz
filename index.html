@@ -2,31 +2,19 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Fuel Efficiency Narrative Visualization</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Martini Glass Narrative: 2017 Cars</title>
   <script src="https://d3js.org/d3.v6.min.js"></script>
   <script src="https://unpkg.com/d3-annotation@2.5.1"></script>
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
   <h1>Fuel Efficiency in 2017 Cars</h1>
-
   <div id="chart-area">
-    <svg id="chart" viewBox="0 0 900 600" preserveAspectRatio="xMidYMid meet" width="100%" height="auto"></svg>
+    <svg width="900" height="600"></svg>
   </div>
-
-  <div id="filter-container" style="margin-top: 20px; display: none;">
-    <label for="make-select">Filter by Make:</label>
-    <select id="make-select">
-      <option value="All">All</option>
-    </select>
-  </div>
-
   <div id="controls">
-    <button id="prev">Previous Scene</button>
     <button id="next">Next Scene</button>
   </div>
-
   <script src="script.js"></script>
 </body>
 </html>
