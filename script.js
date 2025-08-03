@@ -64,9 +64,9 @@ function renderScene(sceneNum) {
 
   // Title and subtitle for each scene
   const titles = [
-    { title: "Gasoline Fuel Efficiency Overview by Make", subtitle: "City MPG vs. Highway MPG" },
-    { title: "High-Efficiency Gasoline Cars", subtitle: "Highlighting Vehicles in Green" },
-    { title: "Low-Efficiency Gasoline Cars", subtitle: "Highlighting Gas Guzzlers in Red" },
+    { title: "Gasoline Fuel Efficiency Overview by Make", subtitle: "City MPG vs. Highway MPG Regardless of Fuel Type" },
+    { title: "High-Efficiency Gasoline Cars", subtitle: "Highlighting Vehicles Greater than 40 MPG in the City" },
+    { title: "Low-Efficiency Gasoline Cars", subtitle: "Highlighting Vehicles Less than 15 MPG in the City" },
     { title: "Conclusion/Exploration", subtitle: "Explore the Data!" }
   ];
   if (sceneNum < 4) {
@@ -151,7 +151,7 @@ function renderAnnotation(sceneNum) {
 
   if (sceneNum === 0) {
     annotations.push({
-      note: { title: "Fuel Efficiency Overview by Make", label: "City MPG vs. Highway MPG" },
+      note: { title: "Fuel Efficiency Overview by Make", label: "City MPG vs. Highway MPG Regardless of Fuel Type" },
       x: x(20),
       y: y(30),
       dx: 60,
@@ -159,7 +159,7 @@ function renderAnnotation(sceneNum) {
     });
   } else if (sceneNum === 1) {
     annotations.push({
-      note: { title: "High-Efficiency Gasoline Cars", label: "Highlighting Vehicles in Green" },
+      note: { title: "High-Efficiency Gasoline Cars", label: "Highlighting Vehicles Greater than 40 MPG in the City" },
       x: x(60),
       y: y(80),
       dx: 100,
@@ -167,7 +167,7 @@ function renderAnnotation(sceneNum) {
     });
   } else if (sceneNum === 2) {
     annotations.push({
-      note: { title: "Low-Efficiency Gasoline Cars", label: "Highlighting Gas Guzzlers in Red" },
+      note: { title: "Low-Efficiency Gasoline Cars", label: "Highlighting Vehicles Less than 15 MPG in the City" },
       x: x(12),
       y: y(15),
       dx: 80,
