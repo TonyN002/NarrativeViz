@@ -70,7 +70,7 @@ function renderScene(sceneNum) {
   // Title and subtitle for each scene
   const titles = [
     { title: "Gasoline Fuel Efficiency Overview", subtitle: "City MPG vs. Highway MPG" },
-    { title: "High-Efficiency Gasoline Cars", subtitle: "Highlighting Vehicles in Green" },
+    { title: "High-Efficiency Gasoline Cars", subtitle: "Avg City MPG > 25 & Avg Highway MPG > 30" },
     { title: "Low-Efficiency Gasoline Cars", subtitle: "Highlighting Gas Guzzlers in Red" },
     { title: "Conclusion/Exploration", subtitle: "Explore the Data!" }
   ];
@@ -146,7 +146,7 @@ function renderScene(sceneNum) {
 }
 
 function getColor(sceneNum, d) {
-  if (sceneNum === 1 && (d.City >= || d.Fuel.includes("Hybrid"))) return "#32CD32"; // green
+  if (sceneNum === 1 && (d.City >= 25 || d.highway >= 30)) return "#32CD32"; // green
   if (sceneNum === 2 && d.cylinders >= 8) return "#d62728"; // red
   return "#999"; // gray
 }
@@ -164,7 +164,7 @@ function renderAnnotation(sceneNum) {
     });
   } else if (sceneNum === 1) {
     annotations.push({
-      note: { title: "High-Efficiency Gasoline Cars", label: "Highlighting Vehicles in Green" },
+      note: { title: "High-Efficiency Gasoline Cars", label: "Avg City MPG > 25 & Avg Highway MPG > 30" },
       x: x(60),
       y: y(80),
       dx: 100,
