@@ -51,7 +51,7 @@ function renderScene(sceneNum) {
     { title: "Low-Efficiency Cars", subtitle: "Gas Guzzlers: 8+ Cylinder Engines" },
     { title: "Conclusion/Exploration", subtitle: "Gas Guzzlers: 8+ Cylinder Engines" }
   ];
-  if (sceneNum < 3) {
+  if (sceneNum < 4) {
     svg.selectAll(".scene-title").remove();
     svg.append("text")
       .attr("class", "scene-title")
@@ -148,6 +148,14 @@ function renderAnnotation(sceneNum) {
   } else if (sceneNum === 2) {
     annotations.push({
       note: { title: "Low-Efficiency Cars", label: "Gas Guzzlers: 8+ Cylinder Engines" },
+      x: x(12),
+      y: y(15),
+      dx: 80,
+      dy: 40
+    });
+  } else if (sceneNum === 3) {
+    annotations.push({
+      note: { title: "Conclusion/Exploration", label: "Explore the Data" },
       x: x(12),
       y: y(15),
       dx: 80,
