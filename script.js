@@ -23,7 +23,7 @@ const tooltip = d3.select("body").append("div")
   .style("display", "none");
 
 d3.csv("https://flunky.github.io/cars2017.csv").then(raw => {
-  data = raw.filter(d => +d.AverageCityMPG > 0 && +d.AverageHighwayMPG > 0);
+  data = raw.filter(d => +d.AverageCityMPG > 0 && +d.AverageHighwayMPG > 0 && d.Fuel === "Gasoline");
   data.forEach(d => {
     d.city = +d.AverageCityMPG;
     d.highway = +d.AverageHighwayMPG;
@@ -46,9 +46,9 @@ function renderScene(sceneNum) {
 
   // Title and subtitle for each scene
   const titles = [
-    { title: "Fuel Efficiency Overview", subtitle: "City MPG vs. Highway MPG" },
-    { title: "High-Efficiency Cars", subtitle: "Highlighting Hybrids & Electric Vehicles" },
-    { title: "Low-Efficiency Cars", subtitle: "Gas Guzzlers: 8+ Cylinder Engines" },
+    { title: "Gasoline Fuel Efficiency Overview", subtitle: "City MPG vs. Highway MPG" },
+    { title: "High-Efficiency Gasoline Cars", subtitle: "Highlighting Vehicles in Green" },
+    { title: "Low-Efficiency Gasoline Cars", subtitle: "Highlighting Gas Guzzlers in Red" },
     { title: "Conclusion/Exploration", subtitle: "Explore the Data!" }
   ];
   if (sceneNum < 4) {
@@ -133,7 +133,7 @@ function renderAnnotation(sceneNum) {
 
   if (sceneNum === 0) {
     annotations.push({
-      note: { title: "Fuel Efficiency Overview", label: "City MPG vs. Highway MPG" },
+      note: { title: "Gasoline Fuel Efficiency Overview", label: "City MPG vs. Highway MPG" },
       x: x(20),
       y: y(30),
       dx: 60,
@@ -141,7 +141,7 @@ function renderAnnotation(sceneNum) {
     });
   } else if (sceneNum === 1) {
     annotations.push({
-      note: { title: "High-Efficiency Cars", label: "Highlighting Hybrids & Electric Vehicles" },
+      note: { title: "High-Efficiency Gasoline Cars", label: "Highlighting Vehicles in Green" },
       x: x(60),
       y: y(80),
       dx: 100,
@@ -149,7 +149,7 @@ function renderAnnotation(sceneNum) {
     });
   } else if (sceneNum === 2) {
     annotations.push({
-      note: { title: "Low-Efficiency Cars", label: "Gas Guzzlers: 8+ Cylinder Engines" },
+      note: { title: "Low-Efficiency Gasoline Cars", label: "Highlighting Gas Guzzlers in Red" },
       x: x(12),
       y: y(15),
       dx: 80,
