@@ -40,14 +40,11 @@ const grouped = d3.rollups(
 );
 
 // Step 3: Convert grouped data to array of objects
-data = grouped.map(([key, values]) => {
-  const [make, fuel] = key.split("||");
+data = grouped.map(([make, mpg]) => {
   return {
     Make: make,
-    Fuel: fuel,
-    city: values.city,
-    highway: values.highway,
-    cylinders: values.cylinders
+    city: mpg.city,
+    highway: mpg.highway
   };
 });
 
