@@ -131,7 +131,7 @@ function renderAnnotation(sceneNum) {
 
   if (sceneNum === 0) {
     annotations.push({
-      note: { title: "Most Cars", label: "Follow a trend where highway MPG > city MPG" },
+      note: { title: "Fuel Efficiency Overview", label: "City MPG vs. Highway MPG" },
       x: x(20),
       y: y(30),
       dx: 60,
@@ -139,7 +139,7 @@ function renderAnnotation(sceneNum) {
     });
   } else if (sceneNum === 1) {
     annotations.push({
-      note: { title: "High MPG Vehicles", label: "Electric and Hybrid cars shine in city driving" },
+      note: { title: "High-Efficiency Cars", label: "Highlighting Hybrids & Electric Vehicles" },
       x: x(60),
       y: y(80),
       dx: 100,
@@ -147,7 +147,7 @@ function renderAnnotation(sceneNum) {
     });
   } else if (sceneNum === 2) {
     annotations.push({
-      note: { title: "Low MPG Cars", label: "8+ Cylinder cars are less efficient" },
+      note: { title: "Low-Efficiency Cars", label: "Gas Guzzlers: 8+ Cylinder Engines" },
       x: x(12),
       y: y(15),
       dx: 80,
