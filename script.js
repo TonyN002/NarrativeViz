@@ -146,7 +146,7 @@ function renderScene(sceneNum) {
 }
 
 function getColor(sceneNum, d) {
-  if (sceneNum === 1 && (d.City >= 25 )) return "#32CD32"; // green
+  if (sceneNum === 1 && (d.Fuel === "Electricity" || d.Fuel.includes("Hybrid"))) return "#32CD32"; // green
   if (sceneNum === 2 && d.cylinders >= 8) return "#d62728"; // red
   return "#999"; // gray
 }
