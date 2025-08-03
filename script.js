@@ -142,7 +142,7 @@ function renderScene(sceneNum) {
 
 function getColor(sceneNum, d) {
   if (sceneNum === 1 && (d.city >= 40)) return "#32CD32"; // green
-  if (sceneNum === 2 && d.cylinders >= 8) return "#d62728"; // red
+  if (sceneNum === 2 && d.city <= 15) return "#d62728"; // red
   return "#999"; // gray
 }
 
