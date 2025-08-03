@@ -34,10 +34,9 @@ const grouped = d3.rollups(
   filtered,
   v => ({
     city: d3.mean(v, d => +d.AverageCityMPG),
-    highway: d3.mean(v, d => +d.AverageHighwayMPG),
-    cylinders: d3.mean(v, d => +d["EngineCylinders"])
+    highway: d3.mean(v, d => +d.AverageHighwayMPG)
   }),
-  d => `${d.Make}||${d.Fuel}`
+  d => d.Make
 );
 
 // Step 3: Convert grouped data to array of objects
