@@ -26,9 +26,7 @@ d3.csv("https://flunky.github.io/cars2017.csv").then(raw => {
   // Step 1: Filter for valid data and gasoline only
 const filtered = raw.filter(d =>
   +d.AverageCityMPG > 0 &&
-  +d.AverageHighwayMPG > 0 &&
-  d.Fuel === "Electricity" ||
-  d.Fuel.includes("Hybrid")
+  +d.AverageHighwayMPG > 0
 );
 
 // Step 2: Group by Make + Fuel
@@ -70,7 +68,7 @@ function renderScene(sceneNum) {
 
   // Title and subtitle for each scene
   const titles = [
-    { title: "Gasoline Fuel Efficiency Overview", subtitle: "City MPG vs. Highway MPG" },
+    { title: "Gasoline Fuel Efficiency Overview by Make", subtitle: "City MPG vs. Highway MPG" },
     { title: "High-Efficiency Gasoline Cars", subtitle: "Highlighting Vehicles in Green" },
     { title: "Low-Efficiency Gasoline Cars", subtitle: "Highlighting Gas Guzzlers in Red" },
     { title: "Conclusion/Exploration", subtitle: "Explore the Data!" }
@@ -157,7 +155,7 @@ function renderAnnotation(sceneNum) {
 
   if (sceneNum === 0) {
     annotations.push({
-      note: { title: "Gasoline Fuel Efficiency Overview", label: "City MPG vs. Highway MPG" },
+      note: { title: "Fuel Efficiency Overview  Mabyke", label: "City MPG vs. Highway MPG" },
       x: x(20),
       y: y(30),
       dx: 60,
