@@ -49,7 +49,7 @@ function renderScene(sceneNum) {
     { title: "Fuel Efficiency Overview", subtitle: "City MPG vs. Highway MPG" },
     { title: "High-Efficiency Cars", subtitle: "Highlighting Hybrids & Electric Vehicles" },
     { title: "Low-Efficiency Cars", subtitle: "Gas Guzzlers: 8+ Cylinder Engines" },
-    { title: "Conclusion/Exploration", subtitle: "Time to Explore!" }
+    { title: "Conclusion/Exploration", subtitle: "Explore the Data!" }
   ];
   if (sceneNum < 4) {
     svg.selectAll(".scene-title").remove();
@@ -155,7 +155,7 @@ function renderAnnotation(sceneNum) {
     });
   } else if (sceneNum === 3) {
     annotations.push({
-      note: { title: "Conclusion/Exploration", label: "Explore the Data" },
+      note: { title: "Conclusion/Exploration", label: "Explore the Data!" },
       x: x(12),
       y: y(15),
       dx: 80,
