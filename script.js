@@ -27,7 +27,8 @@ d3.csv("https://flunky.github.io/cars2017.csv").then(raw => {
 const filtered = raw.filter(d =>
   +d.AverageCityMPG > 0 &&
   +d.AverageHighwayMPG > 0 &&
-  d.Fuel === "Gasoline"
+  d.Fuel === "Electricity" ||
+  d.Fuel.includes("Hybrid")
 );
 
 // Step 2: Group by Make + Fuel
