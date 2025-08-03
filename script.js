@@ -23,12 +23,35 @@ const tooltip = d3.select("body").append("div")
   .style("display", "none");
 
 d3.csv("https://flunky.github.io/cars2017.csv").then(raw => {
-  data = raw.filter(d => +d.AverageCityMPG > 0 && +d.AverageHighwayMPG > 0 && d.Fuel === "Gasoline");
-  data.forEach(d => {
-    d.city = +d.AverageCityMPG;
-    d.highway = +d.AverageHighwayMPG;
-    d.cylinders = +d["EngineCylinders"];
-  });
+  // Step 1: Filter for valid data and gasoline only
+const filtered = raw.filter(d =>
+  +d.AverageCityMPG > 0 &&
+  +d.AverageHighwayMPG > 0 &&
+  d.Fuel === "Gasoline"
+);
+
+// Step 2: Group by Make + Fuel
+const grouped = d3.rollups(
+  filtered,
+  v => ({
+    city: d3.mean(v, d => +d.AverageCityMPG),
+    highway: d3.mean(v, d => +d.AverageHighwayMPG),
+    cylinders: d3.mean(v, d => +d["EngineCylinders"])
+  }),
+  d => `${d.Make}||${d.Fuel}`
+);
+
+// Step 3: Convert grouped data to array of objects
+data = grouped.map(([key, values]) => {
+  const [make, fuel] = key.split("||");
+  return {
+    Make: make,
+    Fuel: fuel,
+    city: values.city,
+    highway: values.highway,
+    cylinders: values.cylinders
+  };
+});
 
   x.domain([0, d3.max(data, d => d.city) + 5]);
   y.domain([0, d3.max(data, d => d.highway) + 5]);
