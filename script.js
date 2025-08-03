@@ -105,7 +105,8 @@ function renderScene(sceneNum) {
     .attr("opacity", 0.8)
     .attr("stroke", "#333");
 
-  dots.on("mouseover", function (event, d) {
+  if (sceneNum === 3) {
+    dots.on("mouseover", function (event, d) {
     tooltip
       .style("display", "block")
       .html(`<strong>${d.Make}</strong><br/>City: ${d.city} MPG<br/>Highway: ${d.highway} MPG`);
@@ -116,6 +117,7 @@ function renderScene(sceneNum) {
   }).on("mouseout", function () {
     tooltip.style("display", "none");
   });
+}
 
   renderAnnotation(sceneNum);
 }
