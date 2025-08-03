@@ -43,8 +43,8 @@ const grouped = d3.rollups(
 data = grouped.map(([make, mpg]) => {
   return {
     Make: make,
-    city: mpg.city,
-    highway: mpg.highway
+    city: Math.round(mpg.city),
+    highway: Math.round(mpg.highway)
   };
 });
 
