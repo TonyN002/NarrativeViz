@@ -141,7 +141,7 @@ function renderScene(sceneNum) {
 }
 
 function getColor(sceneNum, d) {
-  if (sceneNum === 1 && (d.Fuel === "Electricity" || d.Fuel.includes("Hybrid"))) return "#32CD32"; // green
+  if (sceneNum === 1 && (d.city >= 40)) return "#32CD32"; // green
   if (sceneNum === 2 && d.cylinders >= 8) return "#d62728"; // red
   return "#999"; // gray
 }
@@ -151,7 +151,7 @@ function renderAnnotation(sceneNum) {
 
   if (sceneNum === 0) {
     annotations.push({
-      note: { title: "Fuel Efficiency Overview  Mabyke", label: "City MPG vs. Highway MPG" },
+      note: { title: "Fuel Efficiency Overview by Make", label: "City MPG vs. Highway MPG" },
       x: x(20),
       y: y(30),
       dx: 60,
