@@ -105,7 +105,7 @@ function renderScene(sceneNum) {
     .attr("opacity", 0.8)
     .attr("stroke", "#333");
 
-  if (sceneNum === 3) {
+  if (sceneNum >= 3) {
     dots.on("mouseover", function (event, d) {
     tooltip
       .style("display", "block")
