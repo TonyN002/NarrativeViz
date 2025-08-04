@@ -133,6 +133,14 @@ function renderScene(sceneNum) {
       .html(`<strong>High Efficiency Makes:</strong><br>${uniqueMakes.join("<br>")}`);
   }
 
+  if (sceneNum === 2) {
+  const lowEfficiencyMakes = data.filter(d => d.city <= 15).map(d => d.Make);
+  const uniqueMakes = [...new Set(lowEfficiencyMakes)].sort();
+
+  d3.select("#highlighted-makes")
+    .html(`<strong>Low Efficiency Makes:</strong><br>${uniqueMakes.join("<br>")}`);
+}
+
   if (sceneNum >= 3) {
     dots.on("mouseover", function (event, d) {
     tooltip
