@@ -123,6 +123,16 @@ function renderScene(sceneNum) {
     .attr("opacity", 0.8)
     .attr("stroke", "#333");
 
+  d3.select("#highlighted-makes").html("");
+
+  if (sceneNum === 1) {
+    const highEfficiencyMakes = data.filter(d => d.city >= 40).map(d => d.Make);
+    const uniqueMakes = [...new Set(highEfficiencyMakes)].sort();
+
+    d3.select("#highlighted-makes")
+      .html(`<strong>High Efficiency Makes:</strong><br>${uniqueMakes.join("<br>")}`);
+  }
+
   if (sceneNum >= 3) {
     dots.on("mouseover", function (event, d) {
     tooltip
